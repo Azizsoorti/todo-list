@@ -4,15 +4,33 @@ const ToDoList = () => {
 
   const [input, setInput] = useState();
   const [items, setItems] = useState([]);
-
+  const [mood, setMood] = useState({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" });
   const print = () => {
     let newItem = [...items, input];
     setItems(newItem)
     setInput("")
   }
+
+  function moodChange() {
+    if (mood.backgroundColor == "black") {
+      setMood({ backgroundColor: "white", minHeight: "100vh", overflow: "hidden" })
+    } else {
+      setMood({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" })
+    }
+
+  }
+
   return (
-    <div className="container-fluid p-5  bg-dark" style={{ minHeight: "100vh",  overflow: "hidden" }}>
-      <div className="container text-center" >
+    <div className="container-fluid p-5" style={mood}>
+      <div className="mood">
+        {
+          mood.backgroundColor == "black" ?
+            <img className='float-end ' src="./images/moon.png" alt="" style={{ width: "2rem" }} onClick={moodChange} />
+            : <img className='float-end ' src="./images/sun.png" alt="" style={{ width: "2rem" }} onClick={moodChange} />
+        }
+      </div>
+
+      <div className="container pt-5 text-center" >
         <h2 className='fw-bold fs-1 pt-4' style={{
           color: "#ff7000"
         }}>Todo list</h2>
@@ -35,7 +53,7 @@ const ToDoList = () => {
         </div>
           :
           <div>
-            <img className='mb-5 pb-4' src="./images/TODo list.svg" alt="" style={{ width: "22rem" }} />
+            <img src="./images/TODo list.svg" alt="" style={{ width: "22rem" }} />
           </div>}
 
 
