@@ -11,7 +11,7 @@ const ToDoList = () => {
     setInput("")
   }
   return (
-    <div className="container-fluid p-5  bg-dark" style={{ minHeight: "100vh" }}>
+    <div className="container-fluid p-5  bg-dark" style={{ minHeight: "100vh",  overflow: "hidden" }}>
       <div className="container text-center" >
         <h2 className='fw-bold fs-1 pt-4' style={{
           color: "#ff7000"
