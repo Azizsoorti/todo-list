@@ -5,19 +5,30 @@ const ToDoList = () => {
   const [input, setInput] = useState();
   const [items, setItems] = useState([]);
   const [mood, setMood] = useState({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" });
+
+
   const print = () => {
-    let newItem = [...items, input];
-    setItems(newItem)
-    setInput("")
+    if (input) {
+      let newItem = [...items, input];
+      setItems(newItem)
+      setInput("")
+    }
   }
 
   function moodChange() {
     if (mood.backgroundColor == "black") {
       setMood({ backgroundColor: "white", minHeight: "100vh", overflow: "hidden" })
+
     } else {
-      setMood({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" })
+
+      setMood({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" });
+
     }
 
+  }
+
+  function deleteAll() {
+    setItems([])
   }
 
   return (
@@ -37,20 +48,27 @@ const ToDoList = () => {
 
 
         <input style={{ width: "14rem" }} className='my-5 bg-dark shadow-lg border border-0 p-2 rounded text-white' placeholder='Enter your tast' type="text" value={input} onChange={e => setInput(e.target.value)} />
-        <button className='my-5  shadow-lg border border-0 px-4 py-2 rounded ms-2 ' type="submit" onClick={print} style={{ backgroundColor: "#A8DCFA" }} >Add </button>
+        <button className='my-5 fw-bold  shadow-lg border border-0 px-4 py-2 rounded ms-2 ' type="submit" onClick={print} style={{ backgroundColor: "#A8DCFA" }} >Add </button>
 
 
-        {items.length > 0 ? <div className='m-auto rounded  ' style={{ width: "26rem", border: "2px solid white" }}>
-          {items.map((data) => {
-            return (
-              <div>
-                <p className='text-white text-start px-3 py-3 '>{data}  </p>
-                <hr style={{ border: "1px solid white", margin: "0", width: "24rem", margin: "auto" }} />
-              </div>
-            )
-          })}
+        {items.length > 0 ? (
+          <>
+            <div className='m-auto rounded  shadow-lg' style={{ width: "26rem", border: mood.backgroundColor == "black" ? "2px solid white" : "2px solid black" }}>
+              {items.map((data) => {
+                return (
 
-        </div>
+                  <div className=''>
+                    <p className='d-inline  float-start ps-3 py-3 ' style={{ color: mood.backgroundColor == "black" ? "white" : "black" }} >{data}  </p>
+                    <img className='d-inline float-end pe-3 py-3' src="./images/delete.png" alt="" style={{ width: "2.5rem" }} />
+
+                    <hr style={{ border: mood.backgroundColor == "black" ? "1px solid white" : "1px solid black", margin: "0", width: "24rem", margin: "auto" }} />
+                  </div>
+                )
+              })}
+            </div>
+            <button className='mt-5 fw-bold py-2 px-3 bg-dark text-danger' onClick={deleteAll}>Delete All</button>
+          </>
+        )
           :
           <div>
             <img src="./images/TODo list.svg" alt="" style={{ width: "22rem" }} />
