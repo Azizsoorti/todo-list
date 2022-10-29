@@ -13,23 +13,26 @@ const ToDoList = () => {
       setItems(newItem)
       setInput("")
     }
-  }
+  };
 
   function moodChange() {
     if (mood.backgroundColor == "black") {
       setMood({ backgroundColor: "white", minHeight: "100vh", overflow: "hidden" })
-
     } else {
-
       setMood({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" });
-
     }
+  };
 
-  }
+  function deleteItem(id) {
+    const update = items.filter((data, index) => {
+      return index != id;
+    })
+    setItems(update);
+  };
 
   function deleteAll() {
     setItems([])
-  }
+  };
 
   return (
     <div className="container-fluid p-5" style={mood}>
@@ -54,12 +57,13 @@ const ToDoList = () => {
         {items.length > 0 ? (
           <>
             <div className='m-auto rounded  shadow-lg' style={{ width: "26rem", border: mood.backgroundColor == "black" ? "2px solid white" : "2px solid black" }}>
-              {items.map((data) => {
+              {items.map((data, index) => {
+
                 return (
 
-                  <div className=''>
+                  <div className='' key={index}>
                     <p className='d-inline  float-start ps-3 py-3 ' style={{ color: mood.backgroundColor == "black" ? "white" : "black" }} >{data}  </p>
-                    <img className='d-inline float-end pe-3 py-3' src="./images/delete.png" alt="" style={{ width: "2.5rem" }} />
+                    <img onClick={() => { deleteItem(index) }} className='d-inline float-end pe-3 py-3' src="./images/delete.png" alt="" style={{ width: "2.5rem" }} />
 
                     <hr style={{ border: mood.backgroundColor == "black" ? "1px solid white" : "1px solid black", margin: "0", width: "24rem", margin: "auto" }} />
                   </div>
