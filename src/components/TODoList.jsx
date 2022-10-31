@@ -5,13 +5,21 @@ const ToDoList = () => {
   const [input, setInput] = useState();
   const [items, setItems] = useState([]);
   const [mood, setMood] = useState({ backgroundColor: "black", minHeight: "100vh", overflow: "hidden" });
-
+  const [editCheck, setEditCheck] = useState(false);
+  const [editValue, setEditValue] = useState("");
 
   const print = () => {
     if (input) {
-      let newItem = [...items, input];
-      setItems(newItem)
-      setInput("")
+      if (editCheck) {
+        items[editValue] = input
+        setItems(items)
+        setEditCheck(false)
+        setInput("")
+      } else {
+        let newItem = [...items, input];
+        setItems(newItem)
+        setInput("")
+      }
     }
   };
 
@@ -25,9 +33,15 @@ const ToDoList = () => {
 
   function deleteItem(id) {
     const update = items.filter((data, index) => {
-      return index != id;
+      return id != index;
     })
     setItems(update);
+  };
+
+  function edititem(id) {
+    setInput(items[id])
+    setEditValue(id)
+    setEditCheck(true)
   };
 
   function deleteAll() {
@@ -62,10 +76,14 @@ const ToDoList = () => {
                 return (
 
                   <div className='' key={index}>
-                    <p className='d-inline  float-start ps-3 py-3 ' style={{ color: mood.backgroundColor == "black" ? "white" : "black" }} >{data}  </p>
-                    <img onClick={() => { deleteItem(index) }} className='d-inline float-end pe-3 py-3' src="./images/delete.png" alt="" style={{ width: "2.5rem" }} />
+                    <p className='d-inline  float-start ps-3 pb-3 pt-4 ' style={{ color: mood.backgroundColor == "black" ? "white" : "black" }} >{data}  </p>
+                    <div className='d-inline float-end'>
+                      <img onClick={() => { edititem(index) }} className=' pb-3 pt-4 mx-3' src="./images/edit.png" alt="" style={{ width: "1.5rem" }} />
+                      <img onClick={() => { deleteItem(index) }} className="pb-3 pt-4 d-inline   pe-3" src="images/delete.png" style={{ width: "2.5rem" }} alt="" />
+                    </div>
 
-                    <hr style={{ border: mood.backgroundColor == "black" ? "1px solid white" : "1px solid black", margin: "0", width: "24rem", margin: "auto" }} />
+
+                    <hr style={{ border: mood.backgroundColor == "black" ? "1px solid white" : "1px solid black", width: "24rem", margin: "auto" }} />
                   </div>
                 )
               })}
