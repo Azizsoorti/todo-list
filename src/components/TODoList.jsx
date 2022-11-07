@@ -8,7 +8,8 @@ const ToDoList = () => {
   const [editCheck, setEditCheck] = useState(false);
   const [editValue, setEditValue] = useState("");
 
-  const print = () => {
+  const print = (e) => {
+    e.preventDefault();
     if (input) {
       if (editCheck) {
         items[editValue] = input
@@ -63,11 +64,11 @@ const ToDoList = () => {
           color: "#ff7000"
         }}>Todo list</h2>
 
+        <form>
+          <input style={{ width: "14rem" }} className='my-5 bg-dark shadow-lg border border-0 p-2 rounded text-white' placeholder='Enter your tast' type="text" value={input} onChange={e => setInput(e.target.value)} />
+          <button className='my-5 fw-bold  shadow-lg border border-0 px-4 py-2 rounded ms-2 ' type="submit" onClick={(e) => { print(e) }} style={{ backgroundColor: "#A8DCFA" }} >Add </button>
 
-        <input style={{ width: "14rem" }} className='my-5 bg-dark shadow-lg border border-0 p-2 rounded text-white' placeholder='Enter your tast' type="text" value={input} onChange={e => setInput(e.target.value)} />
-        <button className='my-5 fw-bold  shadow-lg border border-0 px-4 py-2 rounded ms-2 ' type="submit" onClick={print} style={{ backgroundColor: "#A8DCFA" }} >Add </button>
-
-
+        </form>
         {items.length > 0 ? (
           <>
             <div className='m-auto rounded  shadow-lg' style={{ width: "26rem", border: mood.backgroundColor == "black" ? "2px solid white" : "2px solid black" }}>
